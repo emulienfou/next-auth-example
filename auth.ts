@@ -34,20 +34,20 @@ const config = {
         logo: "https://raw.githubusercontent.com/emulienfou/next-auth/feat/amazon-provider/docs/public/img/providers/amazon.svg",
       }
     }),
-    Deezer,
-    Soundcloud,
+    // Deezer,
     Google,
-    Mixcloud,
+    // Mixcloud,
     MusicBrainz({
       style: {
         brandColor: "#eb743b",
         logo: "https://upload.wikimedia.org/wikipedia/commons/9/9e/MusicBrainz_Logo_%282016%29.svg",
       }
     }),
+    // Soundcloud,
     Universe({
       style: {
-        brandColor: "#ff9900",
-        logo: "https://assets-global.website-files.com/64628d0a55b289f26f93662f/662147222b9467b353782c03_universe-logo.svg",
+        brandColor: "#3a66e5",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Eo_circle_blue_letter-u.svg",
       }
     }),
   ],

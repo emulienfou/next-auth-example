@@ -114,7 +114,7 @@ export default function Universe<P extends UniverseProfile>(
       };
     },
     style: {
-      brandColor: "#ff9900",
+      brandColor: "#3a66e5",
     },
     ...(options as any),
   };
