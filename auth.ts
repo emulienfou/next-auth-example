@@ -1,7 +1,7 @@
-import Amazon from "@/providers/amazon";
 import NextAuth from "next-auth"
 import "next-auth/jwt"
 
+import Amazon from "@/providers/amazon";
 import Google from "next-auth/providers/google"
 import { createStorage } from "unstorage"
 import memoryDriver from "unstorage/drivers/memory"
