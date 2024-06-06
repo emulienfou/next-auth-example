@@ -1,9 +1,12 @@
+import Universe from "@/providers/universe";
 import NextAuth from "next-auth"
 import "next-auth/jwt"
 
 import Amazon from "@/providers/amazon"
 import Deezer from "@/providers/deezer"
 import Google from "next-auth/providers/google"
+import Mixcloud from "@/providers/mixcloud"
+import MusicBrainz from "@/providers/musicbrainz"
 import Soundcloud from "@/providers/soundcloud"
 import { createStorage } from "unstorage"
 import memoryDriver from "unstorage/drivers/memory"
@@ -27,12 +30,26 @@ const config = {
   providers: [
     Amazon({
       style: {
+        brandColor: "#ff9900",
         logo: "https://raw.githubusercontent.com/emulienfou/next-auth/feat/amazon-provider/docs/public/img/providers/amazon.svg",
       }
     }),
     Deezer,
     Soundcloud,
     Google,
+    Mixcloud,
+    MusicBrainz({
+      style: {
+        brandColor: "#eb743b",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/9/9e/MusicBrainz_Logo_%282016%29.svg",
+      }
+    }),
+    Universe({
+      style: {
+        brandColor: "#ff9900",
+        logo: "https://assets-global.website-files.com/64628d0a55b289f26f93662f/662147222b9467b353782c03_universe-logo.svg",
+      }
+    }),
   ],
   // basePath: "/auth",
   callbacks: {
