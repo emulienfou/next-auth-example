@@ -23,7 +23,11 @@ const config = {
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   adapter: UnstorageAdapter(storage),
   providers: [
-    Amazon,
+    Amazon({
+      style: {
+        logo: "https://raw.githubusercontent.com/emulienfou/next-auth/feat/amazon-provider/docs/public/img/providers/amazon.svg",
+      }
+    }),
     Google,
   ],
   basePath: "/auth",
