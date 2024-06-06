@@ -1,8 +1,10 @@
 import NextAuth from "next-auth"
 import "next-auth/jwt"
 
-import Amazon from "@/providers/amazon";
+import Amazon from "@/providers/amazon"
+import Deezer from "@/providers/deezer"
 import Google from "next-auth/providers/google"
+import Soundcloud from "@/providers/soundcloud"
 import { createStorage } from "unstorage"
 import memoryDriver from "unstorage/drivers/memory"
 import vercelKVDriver from "unstorage/drivers/vercel-kv"
@@ -28,9 +30,11 @@ const config = {
         logo: "https://raw.githubusercontent.com/emulienfou/next-auth/feat/amazon-provider/docs/public/img/providers/amazon.svg",
       }
     }),
+    Deezer,
+    Soundcloud,
     Google,
   ],
-  basePath: "/auth",
+  // basePath: "/auth",
   callbacks: {
     authorized({ request, auth }) {
       const { pathname } = request.nextUrl
@@ -54,7 +58,7 @@ const config = {
   experimental: {
     enableWebAuthn: true,
   },
-  debug: process.env.NODE_ENV !== "production" ? true : false,
+  debug: true,
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config)
