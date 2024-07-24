@@ -13,6 +13,7 @@ import memoryDriver from "unstorage/drivers/memory"
 import vercelKVDriver from "unstorage/drivers/vercel-kv"
 import { UnstorageAdapter } from "@auth/unstorage-adapter"
 import type { NextAuthConfig } from "next-auth"
+import type { NextRequest } from "next/server";
 
 const storage = createStorage({
   driver: process.env.VERCEL
@@ -24,7 +25,7 @@ const storage = createStorage({
     : memoryDriver(),
 })
 
-const config = {
+const config = (req: NextRequest | undefined)=> ({
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   adapter: UnstorageAdapter(storage),
   providers: [
@@ -43,7 +44,7 @@ const config = {
         logo: "https://upload.wikimedia.org/wikipedia/commons/9/9e/MusicBrainz_Logo_%282016%29.svg",
       }
     }),
-    // Soundcloud,
+    Soundcloud(req, {}),
     Universe({
       style: {
         brandColor: "#3a66e5",
@@ -76,9 +77,9 @@ const config = {
     enableWebAuthn: true,
   },
   debug: true,
-} satisfies NextAuthConfig
+} satisfies NextAuthConfig)
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config)
+export const { handlers, auth, signIn, signOut } = NextAuth((req) => config(req))
 
 declare module "next-auth" {
   interface Session {
