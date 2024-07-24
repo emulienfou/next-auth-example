@@ -47,12 +47,21 @@ export interface SoundcloudProfile extends Record<string, any> {
   website_title: string;
 }
 
+// See: https://developers.soundcloud.com/docs#auth-code
 export default function Soundcloud<P extends SoundcloudProfile>(
   options: OAuthUserConfig<P> & { scope?: string },
 ): OAuthConfig<P> {
   const scope = options.scope ?? "";
   const tokenEndpointUrl = "https://secure.soundcloud.com/oauth/token";
   const userInfoEndpointUrl = "https://api.soundcloud.com/me";
+
+  // See: https://github.com/nextauthjs/next-auth/pull/11308
+  // TODO: How to get request inside provider?
+  if (req?.method === 'GET' && req?.headers.get('referer')?.includes('tiktok')) {
+    const url = new URL(req?.url);
+    tkCode = url.searchParams.get('code') as string;
+    tkCallback = url.pathname
+  }
 
   return {
     id: "soundcloud",
@@ -64,6 +73,26 @@ export default function Soundcloud<P extends SoundcloudProfile>(
     },
     token: {
       url: tokenEndpointUrl,
+      async conform(response: Response) {
+            const res = await fetch(response.url, {
+              method: 'POST',
+              headers: {
+                'accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: new URLSearchParams({
+                grant_type: 'authorization_code',
+                client_id: process.env.AUTH_SOUNDCLOUD_KEY!,
+                client_secret: process.env.AUTH_SOUNDCLOUD_SECRET!,
+                redirect_uri: process.env.AUTH_URL! + tkCallback ,
+                // TODO
+                code_verifier: '',
+                // TODO
+                code: '',
+              }),
+            });
+            return res;
+          },
     },
     userinfo: {
       url: userInfoEndpointUrl,
